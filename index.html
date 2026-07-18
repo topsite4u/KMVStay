@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KMV Stay — Премиальная аренда жилья и туры на Кавминводах</title>
-    <meta name="description" content="Элитная аренда квартир и домов в Кисловодске, Пятигорске, Железноводске. Экскурсии по КМВ. Сдайте свое жилье быстро и выгодно.">
+    <title>KMV Stay — Премиальная аренда жилья, коттеджей, автодомов и туры на Кавминводах</title>
+    <meta name="description" content="Элитная аренда квартир, коттеджей, таунхаусов и автодомов в Кисловодске, Пятигорске, Железноводске. Прокат авто, минибасов. Экскурсии по КМВ.">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -354,26 +354,116 @@
             transform: rotate(180deg);
         }
 
-        /* Gallery Grid */
-        .gallery-item {
+        /* Category Card */
+        .category-card {
             position: relative;
             overflow: hidden;
-            border-radius: 12px;
+            border-radius: 20px;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
         }
 
-        .gallery-overlay {
+        .category-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .category-card::after {
+            content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(10, 46, 47, 0.8), transparent);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            display: flex;
-            align-items: flex-end;
-            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(10, 46, 47, 0.9), rgba(10, 46, 47, 0.3) 50%, transparent);
+            transition: all 0.4s ease;
         }
 
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
+        .category-card:hover::after {
+            background: linear-gradient(to top, rgba(201, 169, 97, 0.9), rgba(10, 46, 47, 0.5) 50%, transparent);
+        }
+
+        .category-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            z-index: 2;
+            color: white;
+        }
+
+        /* Transport Card */
+        .transport-card {
+            background: white;
+            border: 1px solid rgba(201, 169, 97, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .transport-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #C9A961, #A88A4A);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.4s ease;
+        }
+
+        .transport-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(10, 46, 47, 0.15);
+            border-color: #C9A961;
+        }
+
+        .transport-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        /* News Card */
+        .news-card {
+            background: white;
+            border: 1px solid rgba(201, 169, 97, 0.15);
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+
+        .news-card:hover {
+            border-color: #C9A961;
+            box-shadow: 0 20px 40px -10px rgba(10, 46, 47, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .news-date {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(201, 169, 97, 0.1);
+            color: #A88A4A;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* VK CTA */
+        .vk-cta {
+            background: linear-gradient(135deg, #0077FF 0%, #0055CC 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vk-cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            filter: blur(50px);
         }
 
         /* Special Offer Badge */
@@ -390,6 +480,7 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             box-shadow: 0 4px 15px rgba(212, 133, 106, 0.4);
+            z-index: 3;
         }
 
         /* Testimonial Card */
@@ -432,12 +523,6 @@
             font-weight: 700;
             color: white;
             box-shadow: 0 4px 15px rgba(201, 169, 97, 0.4);
-        }
-
-        /* Decorative Elements */
-        .decorative-line {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #C9A961, transparent);
         }
 
         /* Mobile Menu */
@@ -487,17 +572,25 @@
             </a>
 
             <!-- Desktop Menu -->
-            <div class="hidden lg:flex items-center space-x-10">
+            <div class="hidden xl:flex items-center space-x-8">
+                <a href="#categories" class="text-sm font-semibold text-gray-700 hover:text-kmv-gold transition-colors relative group">
+                    Недвижимость
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-kmv-gold group-hover:w-full transition-all duration-300"></span>
+                </a>
                 <a href="#apartments" class="text-sm font-semibold text-gray-700 hover:text-kmv-gold transition-colors relative group">
-                    Жилье
+                    Квартиры
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-kmv-gold group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a href="#transport" class="text-sm font-semibold text-gray-700 hover:text-kmv-gold transition-colors relative group">
+                    Транспорт
                     <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-kmv-gold group-hover:w-full transition-all duration-300"></span>
                 </a>
                 <a href="#tours" class="text-sm font-semibold text-gray-700 hover:text-kmv-gold transition-colors relative group">
                     Экскурсии
                     <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-kmv-gold group-hover:w-full transition-all duration-300"></span>
                 </a>
-                <a href="#how-it-works" class="text-sm font-semibold text-gray-700 hover:text-kmv-gold transition-colors relative group">
-                    Как это работает
+                <a href="#news" class="text-sm font-semibold text-gray-700 hover:text-kmv-gold transition-colors relative group">
+                    Новости
                     <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-kmv-gold group-hover:w-full transition-all duration-300"></span>
                 </a>
                 <a href="#hosts" class="text-sm font-semibold text-kmv-terracotta hover:text-kmv-terracottaDark transition-colors relative group">
@@ -507,7 +600,7 @@
             </div>
 
             <!-- Auth Buttons -->
-            <div class="hidden lg:flex items-center gap-4">
+            <div class="hidden xl:flex items-center gap-4">
                 <a href="mailto:topsite@atomicmail.io?subject=Вход%20в%20систему%20KMV%20Stay&body=Здравствуйте!%20Помогите%20войти%20в%20личный%20кабинет." class="text-sm font-semibold text-gray-700 hover:text-kmv-gold px-4 py-2 transition-colors">Войти</a>
                 <a href="#hosts" class="bg-gradient-to-r from-kmv-forest to-kmv-forestLight text-white text-sm font-semibold px-6 py-3 rounded-full hover:from-kmv-gold hover:to-kmv-goldDark transition-all duration-500 shadow-elegant hover:shadow-glow">
                     Разместить объявление
@@ -515,18 +608,20 @@
             </div>
 
             <!-- Mobile Menu Button -->
-            <button class="lg:hidden text-kmv-forest text-2xl" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+            <button class="xl:hidden text-kmv-forest text-2xl" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>
     </div>
 
     <!-- Mobile Menu -->
-    <div class="hidden lg:hidden bg-white border-t border-kmv-sand absolute w-full" id="mobile-menu">
+    <div class="hidden xl:hidden bg-white border-t border-kmv-sand absolute w-full" id="mobile-menu">
         <div class="px-4 py-6 space-y-4">
-            <a href="#apartments" class="block text-base font-semibold text-gray-800 hover:text-kmv-gold transition-colors">Жилье</a>
+            <a href="#categories" class="block text-base font-semibold text-gray-800 hover:text-kmv-gold transition-colors">Недвижимость</a>
+            <a href="#apartments" class="block text-base font-semibold text-gray-800 hover:text-kmv-gold transition-colors">Квартиры</a>
+            <a href="#transport" class="block text-base font-semibold text-gray-800 hover:text-kmv-gold transition-colors">Транспорт</a>
             <a href="#tours" class="block text-base font-semibold text-gray-800 hover:text-kmv-gold transition-colors">Экскурсии</a>
-            <a href="#how-it-works" class="block text-base font-semibold text-gray-800 hover:text-kmv-gold transition-colors">Как это работает</a>
+            <a href="#news" class="block text-base font-semibold text-gray-800 hover:text-kmv-gold transition-colors">Новости КМВ</a>
             <a href="#hosts" class="block text-base font-semibold text-kmv-terracotta hover:text-kmv-terracottaDark transition-colors">Сдать свое жилье</a>
             <hr class="border-kmv-sand">
             <a href="mailto:topsite@atomicmail.io" class="block w-full text-center bg-gradient-to-r from-kmv-forest to-kmv-forestLight text-white font-semibold py-3 rounded-xl">Разместить объявление</a>
@@ -547,7 +642,7 @@
                 <span class="text-kmv-gold italic">Кавказские Минеральные Воды</span>
             </h1>
             <p class="text-white/90 text-lg md:text-xl max-w-3xl mx-auto mb-14 font-light leading-relaxed">
-                Элитные квартиры, загородные дома и незабываемые экскурсии в Кисловодске, Пятигорске и Железноводске. Ваш идеальный отдых начинается здесь.
+                Элитные квартиры, коттеджи, таунхаусы и автодома в Кисловодске, Пятигорске и Железноводске. Прокат авто и незабываемые экскурсии.
             </p>
         </div>
 
@@ -613,6 +708,115 @@
 <!-- Spacer for Search Bar overlap -->
 <div class="h-24 md:h-32"></div>
 
+<!-- CATEGORIES SECTION -->
+<section id="categories" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 reveal">
+            <span class="text-kmv-gold font-bold text-sm tracking-[0.3em] uppercase mb-4 block">Виды недвижимости</span>
+            <h2 class="text-4xl md:text-5xl font-serif font-bold text-kmv-forest">Найдите свой идеальный отдых</h2>
+            <p class="text-gray-600 mt-4 max-w-2xl mx-auto text-lg">От уютных квартир до просторных коттеджей и автодомов — у нас есть всё для комфортного отдыха на КМВ</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- Category 1: Apartments -->
+            <div class="category-card h-80 reveal" onclick="window.location.href='#apartments'">
+                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=600" alt="Квартиры" class="w-full h-full object-cover">
+                <div class="category-content">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-building text-kmv-gold text-xl"></i>
+                        <span class="text-xs uppercase tracking-widest font-bold">180 объектов</span>
+                    </div>
+                    <h3 class="font-serif text-3xl font-bold mb-2">Квартиры</h3>
+                    <p class="text-white/80 text-sm">От студий до 3-комнатных в центре городов</p>
+                </div>
+            </div>
+
+            <!-- Category 2: Cottages -->
+            <div class="category-card h-80 reveal delay-100" onclick="window.location.href='mailto:topsite@atomicmail.io?subject=Поиск%20коттеджа&body=Здравствуйте!%20Интересует%20аренда%20коттеджа%20на%20КМВ.%20Даты:%20'">
+                <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&q=80&w=600" alt="Коттеджи" class="w-full h-full object-cover">
+                <div class="category-content">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-house-chimney text-kmv-gold text-xl"></i>
+                        <span class="text-xs uppercase tracking-widest font-bold">45 объектов</span>
+                    </div>
+                    <h3 class="font-serif text-3xl font-bold mb-2">Коттеджи</h3>
+                    <p class="text-white/80 text-sm">Загородные дома с баней и бассейном</p>
+                </div>
+            </div>
+
+            <!-- Category 3: Townhouses -->
+            <div class="category-card h-80 reveal delay-200" onclick="window.location.href='mailto:topsite@atomicmail.io?subject=Поиск%20таунхауса&body=Здравствуйте!%20Интересует%20аренда%20таунхауса%20на%20КМВ.%20Даты:%20'">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600" alt="Таунхаусы" class="w-full h-full object-cover">
+                <div class="category-content">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-house-flag text-kmv-gold text-xl"></i>
+                        <span class="text-xs uppercase tracking-widest font-bold">28 объектов</span>
+                    </div>
+                    <h3 class="font-serif text-3xl font-bold mb-2">Таунхаусы</h3>
+                    <p class="text-white/80 text-sm">Современные двухуровневые residences</p>
+                </div>
+            </div>
+
+            <!-- Category 4: Motorhomes -->
+            <div class="category-card h-80 reveal delay-300" onclick="window.location.href='mailto:topsite@atomicmail.io?subject=Поиск%20автодома&body=Здравствуйте!%20Интересует%20аренда%20автодома%20на%20КМВ.%20Даты:%20'">
+                <img src="https://images.unsplash.com/photo-1561361513-2d000a50f3dc?auto=format&fit=crop&q=80&w=600" alt="Автодома" class="w-full h-full object-cover">
+                <div class="category-content">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-caravan text-kmv-gold text-xl"></i>
+                        <span class="text-xs uppercase tracking-widest font-bold">15 объектов</span>
+                    </div>
+                    <h3 class="font-serif text-3xl font-bold mb-2">Автодома</h3>
+                    <p class="text-white/80 text-sm">Свобода путешествий на колёсах</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Additional categories row -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+            <!-- Guest Houses -->
+            <div class="category-card h-64 reveal" onclick="window.location.href='mailto:topsite@atomicmail.io?subject=Поиск%20гостевого%20дома&body=Здравствуйте!%20Интересует%20гостевой%20дом%20на%20КМВ.%20Даты:%20'">
+                <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&q=80&w=600" alt="Гостевые дома" class="w-full h-full object-cover">
+                <div class="category-content">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-house-user text-kmv-gold text-xl"></i>
+                        <span class="text-xs uppercase tracking-widest font-bold">62 объекта</span>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold mb-1">Гостевые дома</h3>
+                    <p class="text-white/80 text-sm">Уютные мини-отели с домашней атмосферой</p>
+                </div>
+            </div>
+
+            <!-- Villas -->
+            <div class="category-card h-64 reveal delay-100" onclick="window.location.href='mailto:topsite@atomicmail.io?subject=Поиск%20виллы&body=Здравствуйте!%20Интересует%20аренда%20виллы%20на%20КМВ.%20Даты:%20'">
+                <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&q=80&w=600" alt="Виллы" class="w-full h-full object-cover">
+                <div class="category-content">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-crown text-kmv-gold text-xl"></i>
+                        <span class="text-xs uppercase tracking-widest font-bold">12 объектов</span>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold mb-1">Премиум виллы</h3>
+                    <p class="text-white/80 text-sm">Эксклюзивная недвижимость класса люкс</p>
+                </div>
+            </div>
+
+            <!-- Other -->
+            <div class="category-card h-64 reveal delay-200" onclick="window.location.href='mailto:topsite@atomicmail.io?subject=Поиск%20другой%20недвижимости&body=Здравствуйте!%20Интересует%20другая%20недвижимость%20на%20КМВ.%20Опишите%20ваши%20пожелания:%20'">
+                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=600" alt="Другая недвижимость" class="w-full h-full object-cover">
+                <div class="category-content">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-ellipsis text-kmv-gold text-xl"></i>
+                        <span class="text-xs uppercase tracking-widest font-bold">20+ объектов</span>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold mb-1">Другая недвижимость</h3>
+                    <p class="text-white/80 text-sm">Апартаменты, лофты, шале и уникальные объекты</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Cities Quick Filter -->
 <section class="py-16 bg-kmv-cream">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -649,51 +853,8 @@
     </div>
 </section>
 
-<!-- How It Works -->
-<section id="how-it-works" class="py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-20 reveal">
-            <span class="text-kmv-gold font-bold text-sm tracking-[0.3em] uppercase mb-4 block">Просто и удобно</span>
-            <h2 class="text-4xl md:text-5xl font-serif font-bold text-kmv-forest">Как это работает</h2>
-            <p class="text-gray-600 mt-4 max-w-2xl mx-auto text-lg">Три простых шага до идеального отдыха на Кавказе</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <!-- Step 1 -->
-            <div class="step-card bg-kmv-cream rounded-2xl p-8 pt-12 text-center reveal">
-                <div class="step-number">1</div>
-                <div class="w-16 h-16 bg-kmv-gold/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <i class="fa-solid fa-magnifying-glass-location text-3xl text-kmv-gold"></i>
-                </div>
-                <h3 class="text-xl font-bold text-kmv-forest mb-3">Найдите жилье</h3>
-                <p class="text-gray-600 text-sm leading-relaxed">Выберите город, даты и количество гостей. Наша система подберет лучшие варианты под ваш бюджет.</p>
-            </div>
-
-            <!-- Step 2 -->
-            <div class="step-card bg-kmv-cream rounded-2xl p-8 pt-12 text-center reveal delay-100">
-                <div class="step-number">2</div>
-                <div class="w-16 h-16 bg-kmv-gold/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <i class="fa-solid fa-calendar-check text-3xl text-kmv-gold"></i>
-                </div>
-                <h3 class="text-xl font-bold text-kmv-forest mb-3">Забронируйте</h3>
-                <p class="text-gray-600 text-sm leading-relaxed">Безопасная оплата и мгновенное подтверждение. Мы гарантируем соответствие описания и реальности.</p>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="step-card bg-kmv-cream rounded-2xl p-8 pt-12 text-center reveal delay-200">
-                <div class="step-number">3</div>
-                <div class="w-16 h-16 bg-kmv-gold/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <i class="fa-solid fa-key text-3xl text-kmv-gold"></i>
-                </div>
-                <h3 class="text-xl font-bold text-kmv-forest mb-3">Наслаждайтесь</h3>
-                <p class="text-gray-600 text-sm leading-relaxed">Заселяйтесь и отдыхайте. Наша поддержка 24/7 поможет с любыми вопросами во время проживания.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Featured Apartments -->
-<section id="apartments" class="py-24 bg-kmv-cream">
+<section id="apartments" class="py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal">
             <div>
@@ -711,10 +872,10 @@
             <div class="bg-white rounded-2xl border border-kmv-sand shadow-card hover:shadow-elegant transition-all duration-500 group reveal">
                 <div class="relative img-zoom-container rounded-t-2xl h-72">
                     <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=600" alt="Квартира" class="w-full h-full object-cover">
-                    <div class="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-lg text-xs font-bold text-kmv-forest uppercase tracking-wide shadow-md">
+                    <div class="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-lg text-xs font-bold text-kmv-forest uppercase tracking-wide shadow-md z-10">
                         Кисловодск
                     </div>
-                    <button class="absolute top-4 right-4 w-10 h-10 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors shadow-md">
+                    <button class="absolute top-4 right-4 w-10 h-10 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors shadow-md z-10">
                         <i class="fa-regular fa-heart"></i>
                     </button>
                 </div>
@@ -751,10 +912,10 @@
             <div class="bg-white rounded-2xl border border-kmv-sand shadow-card hover:shadow-elegant transition-all duration-500 group reveal delay-100">
                 <div class="relative img-zoom-container rounded-t-2xl h-72">
                     <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&q=80&w=600" alt="Квартира" class="w-full h-full object-cover">
-                    <div class="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-lg text-xs font-bold text-kmv-forest uppercase tracking-wide shadow-md">
+                    <div class="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-lg text-xs font-bold text-kmv-forest uppercase tracking-wide shadow-md z-10">
                         Пятигорск
                     </div>
-                    <button class="absolute top-4 right-4 w-10 h-10 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors shadow-md">
+                    <button class="absolute top-4 right-4 w-10 h-10 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors shadow-md z-10">
                         <i class="fa-regular fa-heart"></i>
                     </button>
                 </div>
@@ -792,7 +953,7 @@
                 <div class="offer-badge">-20% на неделю</div>
                 <div class="relative img-zoom-container rounded-t-2xl h-72">
                     <img src="https://images.unsplash.com/photo-1512918760513-95f192972701?auto=format&fit=crop&q=80&w=600" alt="Дом" class="w-full h-full object-cover">
-                    <div class="absolute top-4 right-4 w-10 h-10 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors shadow-md">
+                    <button class="absolute top-4 right-4 w-10 h-10 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors shadow-md z-10">
                         <i class="fa-regular fa-heart"></i>
                     </button>
                 </div>
@@ -826,11 +987,109 @@
             </div>
 
         </div>
-        
-        <div class="mt-12 text-center md:hidden">
-            <a href="mailto:topsite@atomicmail.io" class="inline-flex items-center gap-2 text-kmv-forest font-semibold border-b-2 border-kmv-gold pb-1">
-                Смотреть все объекты <i class="fa-solid fa-arrow-right"></i>
-            </a>
+    </div>
+</section>
+
+<!-- TRANSPORT SECTION -->
+<section id="transport" class="py-24 bg-kmv-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 reveal">
+            <span class="text-kmv-terracotta font-bold text-sm tracking-[0.3em] uppercase mb-4 block">Транспортные услуги</span>
+            <h2 class="text-4xl md:text-5xl font-serif font-bold text-kmv-forest">Передвигайтесь с комфортом</h2>
+            <p class="text-gray-600 mt-4 max-w-2xl mx-auto text-lg">Аренда автомобилей и заказ минибасов с водителем для любых поездок по КМВ</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Car Rental -->
+            <div class="transport-card rounded-2xl p-8 reveal">
+                <div class="flex items-start gap-6 mb-6">
+                    <div class="w-20 h-20 bg-gradient-to-br from-kmv-gold to-kmv-goldDark rounded-2xl flex items-center justify-center flex-shrink-0 shadow-glow">
+                        <i class="fa-solid fa-car-side text-4xl text-white"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-2">
+                            <h3 class="text-2xl font-serif font-bold text-kmv-forest">Взять авто в прокат</h3>
+                            <span class="bg-kmv-gold/10 text-kmv-goldDark text-xs font-bold px-2 py-1 rounded-full">HOT</span>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed">Широкий выбор автомобилей эконом, комфорт и премиум класса. Без залога, полная страховка, подача в любую точку КМВ.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 mb-6 p-4 bg-kmv-cream rounded-xl">
+                    <div class="text-center">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-1">Эконом</div>
+                        <div class="font-bold text-kmv-forest">от 2 500 ₽</div>
+                        <div class="text-xs text-gray-500">/ сутки</div>
+                    </div>
+                    <div class="text-center border-x border-kmv-sand">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-1">Комфорт</div>
+                        <div class="font-bold text-kmv-forest">от 4 500 ₽</div>
+                        <div class="text-xs text-gray-500">/ сутки</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-1">Премиум</div>
+                        <div class="font-bold text-kmv-forest">от 8 000 ₽</div>
+                        <div class="text-xs text-gray-500">/ сутки</div>
+                    </div>
+                </div>
+
+                <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-kmv-gold"></i> Полная страховка КАСКО и ОСАГО</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-kmv-gold"></i> Без залога для проверенных клиентов</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-kmv-gold"></i> Подача авто в аэропорт МинВоды</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-kmv-gold"></i> Детское кресло и навигатор бесплатно</li>
+                </ul>
+
+                <a href="mailto:topsite@atomicmail.io?subject=Прокат%20автомобиля%20на%20КМВ&body=Здравствуйте!%20Хочу%20взять%20авто%20в%20прокат.%0A%0AКласс%20авто:%20%0AДаты:%20%0AМои%20контактные%20данные:%20" class="w-full bg-gradient-to-r from-kmv-forest to-kmv-forestLight text-white font-bold py-4 rounded-xl text-center hover:from-kmv-gold hover:to-kmv-goldDark transition-all duration-500 block">
+                    <i class="fa-solid fa-key mr-2"></i>Забронировать авто
+                </a>
+            </div>
+
+            <!-- Minibus -->
+            <div class="transport-card rounded-2xl p-8 reveal delay-100">
+                <div class="flex items-start gap-6 mb-6">
+                    <div class="w-20 h-20 bg-gradient-to-br from-kmv-terracotta to-kmv-terracottaDark rounded-2xl flex items-center justify-center flex-shrink-0 shadow-glow">
+                        <i class="fa-solid fa-van-shuttle text-4xl text-white"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-2">
+                            <h3 class="text-2xl font-serif font-bold text-kmv-forest">Заказать минибас</h3>
+                            <span class="bg-kmv-terracotta/10 text-kmv-terracottaDark text-xs font-bold px-2 py-1 rounded-full">С ВОДИТЕЛЕМ</span>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed">Комфортные минибасы на 7-20 мест с опытными водителями. Идеально для экскурсий, трансферов и групповых поездок.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 mb-6 p-4 bg-kmv-cream rounded-xl">
+                    <div class="text-center">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-1">7 мест</div>
+                        <div class="font-bold text-kmv-forest">от 5 000 ₽</div>
+                        <div class="text-xs text-gray-500">/ смена</div>
+                    </div>
+                    <div class="text-center border-x border-kmv-sand">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-1">12 мест</div>
+                        <div class="font-bold text-kmv-forest">от 7 500 ₽</div>
+                        <div class="text-xs text-gray-500">/ смена</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-1">20 мест</div>
+                        <div class="font-bold text-kmv-forest">от 10 000 ₽</div>
+                        <div class="text-xs text-gray-500">/ смена</div>
+                    </div>
+                </div>
+
+                <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-kmv-terracotta"></i> Опытные водители со знанием маршрутов</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-kmv-terracotta"></i> Кондиционер и Wi-Fi в салоне</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-kmv-terracotta"></i> Трансфер из аэропорта МинВоды</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-kmv-terracotta"></i> Индивидуальные и групповые туры</li>
+                </ul>
+
+                <a href="mailto:topsite@atomicmail.io?subject=Заказ%20минибаса%20на%20КМВ&body=Здравствуйте!%20Хочу%20заказать%20минибас.%0A%0AКоличество%20мест:%20%0AМаршрут:%20%0AДата:%20%0AМои%20контактные%20данные:%20" class="w-full bg-gradient-to-r from-kmv-terracotta to-kmv-terracottaDark text-white font-bold py-4 rounded-xl text-center hover:from-kmv-gold hover:to-kmv-goldDark transition-all duration-500 block">
+                    <i class="fa-solid fa-phone mr-2"></i>Заказать минибас
+                </a>
+            </div>
         </div>
     </div>
 </section>
@@ -908,8 +1167,156 @@
     </div>
 </section>
 
+<!-- NEWS SECTION -->
+<section id="news" class="py-24 bg-kmv-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal">
+            <div>
+                <span class="text-kmv-terracotta font-bold text-sm tracking-[0.3em] uppercase mb-3 block">Свежие новости</span>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-kmv-forest">Новости КМВ</h2>
+            </div>
+            <a href="mailto:topsite@atomicmail.io?subject=Подписка%20на%20новости%20КМВ&body=Здравствуйте!%20Хочу%20подписаться%20на%20рассылку%20новостей%20КМВ." class="hidden md:flex items-center gap-2 text-kmv-forest font-semibold hover:text-kmv-gold transition-colors mt-4 md:mt-0 group">
+                Подписаться на рассылку <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- News 1 -->
+            <article class="news-card rounded-2xl overflow-hidden reveal">
+                <div class="img-zoom-container h-56">
+                    <img src="https://images.unsplash.com/photo-1604580864964-0462f5d5b1a8?auto=format&fit=crop&q=80&w=600" alt="Новости" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="news-date">
+                            <i class="fa-regular fa-calendar"></i>
+                            15 июля 2026
+                        </span>
+                        <span class="text-xs font-bold text-kmv-terracotta uppercase tracking-wider">Событие</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3 hover:text-kmv-gold transition-colors cursor-pointer">Фестиваль «Нарзанная долина» пройдет в Кисловодске</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed mb-4">С 20 по 25 августа в Курортном парке состоится ежегодный фестиваль с дегустациями, концертами и мастер-классами.</p>
+                    <a href="mailto:topsite@atomicmail.io?subject=Подробнее%20о%20фестивале%20Нарзанная%20долина&body=Здравствуйте!%20Расскажите%20подробнее%20о%20фестивале." class="text-sm font-semibold text-kmv-forest hover:text-kmv-gold transition-colors flex items-center gap-1">
+                        Читать далее <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- News 2 -->
+            <article class="news-card rounded-2xl overflow-hidden reveal delay-100">
+                <div class="img-zoom-container h-56">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&q=80&w=600" alt="Новости" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="news-date">
+                            <i class="fa-regular fa-calendar"></i>
+                            10 июля 2026
+                        </span>
+                        <span class="text-xs font-bold text-kmv-terracotta uppercase tracking-wider">Инфраструктура</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3 hover:text-kmv-gold transition-colors cursor-pointer">Реконструкция Курортного бульвара в Пятигорске завершена</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed mb-4">Обновленный бульвар стал еще привлекательнее: новые пешеходные зоны, освещение и зоны отдыха для туристов.</p>
+                    <a href="mailto:topsite@atomicmail.io?subject=Подробнее%20о%20реконструкции&body=Здравствуйте!%20Расскажите%20подробнее." class="text-sm font-semibold text-kmv-forest hover:text-kmv-gold transition-colors flex items-center gap-1">
+                        Читать далее <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- News 3 -->
+            <article class="news-card rounded-2xl overflow-hidden reveal delay-200">
+                <div class="img-zoom-container h-56">
+                    <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&q=80&w=600" alt="Новости" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="news-date">
+                            <i class="fa-regular fa-calendar"></i>
+                            5 июля 2026
+                        </span>
+                        <span class="text-xs font-bold text-kmv-terracotta uppercase tracking-wider">Туризм</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3 hover:text-kmv-gold transition-colors cursor-pointer">Новый канатный путь на Машуке откроется в сентябре</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed mb-4">Современная гондольная дорога свяжет нижнюю часть горы с смотровой площадкой на высоте 990 метров.</p>
+                    <a href="mailto:topsite@atomicmail.io?subject=Подробнее%20о%20канатной%20дороге&body=Здравствуйте!%20Расскажите%20подробнее." class="text-sm font-semibold text-kmv-forest hover:text-kmv-gold transition-colors flex items-center gap-1">
+                        Читать далее <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<!-- VK CTA SECTION -->
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="vk-cta rounded-3xl p-10 md:p-16 relative overflow-hidden reveal">
+            <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <div class="text-white">
+                    <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
+                        <i class="fa-brands fa-vk text-lg"></i>
+                        Наше сообщество
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold leading-tight mb-6">
+                        Присоединяйтесь к нашей группе <span class="text-yellow-300">ВКонтакте</span>
+                    </h2>
+                    <p class="text-white/90 text-lg mb-8 leading-relaxed">
+                        Будьте в курсе лучших предложений, горящих скидок, новостей КМВ и эксклюзивных акций. Более <strong class="text-yellow-300">25 000 подписчиков</strong> уже с нами!
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="mailto:topsite@atomicmail.io?subject=Ссылка%20на%20группу%20ВК%20KMV%20Stay&body=Здравствуйте!%20Пришлите,%20пожалуйста,%20ссылку%20на%20вашу%20группу%20ВКонтакте." class="bg-white text-blue-600 font-bold py-4 px-8 rounded-xl hover:bg-yellow-300 hover:text-blue-700 transition-all duration-300 inline-flex items-center justify-center gap-2 shadow-lg">
+                            <i class="fa-brands fa-vk text-xl"></i>
+                            Подписаться на KMV Stay
+                        </a>
+                        <a href="mailto:topsite@atomicmail.io?subject=Вопрос%20из%20ВК&body=Здравствуйте!%20Нашел%20вас%20через%20ВКонтакте.%20" class="bg-white/10 backdrop-blur-sm border border-white/30 text-white font-bold py-4 px-8 rounded-xl hover:bg-white/20 transition-all duration-300 inline-flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-envelope"></i>
+                            Написать нам
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hidden lg:block">
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 text-white">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center">
+                                <i class="fa-brands fa-vk text-4xl text-blue-600"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-xl">KMV Stay</div>
+                                <div class="text-sm text-white/70">Кавказские Минеральные Воды</div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-yellow-300">25K+</div>
+                                <div class="text-xs text-white/70">Подписчиков</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-yellow-300">500+</div>
+                                <div class="text-xs text-white/70">Объектов</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-yellow-300">4.9</div>
+                                <div class="text-xs text-white/70">Рейтинг</div>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-fire text-yellow-300"></i> Горящие предложения каждый день</div>
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-percent text-yellow-300"></i> Скидки до 30% для подписчиков</div>
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-bell text-yellow-300"></i> Новости и события КМВ</div>
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-camera text-yellow-300"></i> Фото и видео из путешествий</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Testimonials -->
-<section class="py-24 bg-kmv-cream">
+<section class="py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16 reveal">
             <span class="text-kmv-gold font-bold text-sm tracking-[0.3em] uppercase mb-3 block">Отзывы</span>
@@ -945,7 +1352,7 @@
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
                 </div>
-                <p class="text-gray-700 leading-relaxed mb-6 italic">"Бронировали дом в Железноводске на неделю. Потрясающие виды, тишина и комфорт. Сервис на высшем уровне!"</p>
+                <p class="text-gray-700 leading-relaxed mb-6 italic">"Арендовали коттедж в Железноводске на неделю. Потрясающие виды, тишина и комфорт. Сервис на высшем уровне!"</p>
                 <div class="flex items-center gap-3">
                     <div class="w-12 h-12 bg-gradient-to-br from-kmv-forest to-kmv-forestLight rounded-full flex items-center justify-center text-white font-bold">Д</div>
                     <div>
@@ -964,7 +1371,7 @@
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
                 </div>
-                <p class="text-gray-700 leading-relaxed mb-6 italic">"Отличный сервис! Быстро нашли квартиру, все вопросы решались моментально. Рекомендую всем!"</p>
+                <p class="text-gray-700 leading-relaxed mb-6 italic">"Отличный сервис! Быстро нашли квартиру, взяли авто в прокат и заказали экскурсии. Рекомендую всем!"</p>
                 <div class="flex items-center gap-3">
                     <div class="w-12 h-12 bg-gradient-to-br from-kmv-terracotta to-kmv-terracottaDark rounded-full flex items-center justify-center text-white font-bold">Е</div>
                     <div>
@@ -977,76 +1384,8 @@
     </div>
 </section>
 
-<!-- FAQ Section -->
-<section class="py-24 bg-white">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16 reveal">
-            <span class="text-kmv-gold font-bold text-sm tracking-[0.3em] uppercase mb-3 block">Вопросы и ответы</span>
-            <h2 class="text-4xl md:text-5xl font-serif font-bold text-kmv-forest">Часто задаваемые вопросы</h2>
-        </div>
-
-        <div class="space-y-4 reveal">
-            <!-- FAQ 1 -->
-            <div class="faq-item border-b border-kmv-sand/50">
-                <div class="faq-question flex items-center justify-between py-6 cursor-pointer">
-                    <h3 class="text-lg font-bold text-kmv-forest pr-8">Как забронировать жилье?</h3>
-                    <i class="fa-solid fa-chevron-down text-kmv-gold transition-transform duration-300 faq-icon"></i>
-                </div>
-                <div class="faq-answer text-gray-600 leading-relaxed">
-                    Выберите подходящий объект, укажите даты заезда и выезда, количество гостей. Нажмите кнопку "Забронировать" и следуйте инструкциям. После подтверждения бронирования вы получите все детали на email.
-                </div>
-            </div>
-
-            <!-- FAQ 2 -->
-            <div class="faq-item border-b border-kmv-sand/50">
-                <div class="faq-question flex items-center justify-between py-6 cursor-pointer">
-                    <h3 class="text-lg font-bold text-kmv-forest pr-8">Какие способы оплаты вы принимаете?</h3>
-                    <i class="fa-solid fa-chevron-down text-kmv-gold transition-transform duration-300 faq-icon"></i>
-                </div>
-                <div class="faq-answer text-gray-600 leading-relaxed">
-                    Мы принимаем оплату банковскими картами (Visa, MasterCard, МИР), через СБП, а также наличными при заселении. Для корпоративных клиентов доступна оплата по безналичному расчету.
-                </div>
-            </div>
-
-            <!-- FAQ 3 -->
-            <div class="faq-item border-b border-kmv-sand/50">
-                <div class="faq-question flex items-center justify-between py-6 cursor-pointer">
-                    <h3 class="text-lg font-bold text-kmv-forest pr-8">Можно ли отменить бронирование?</h3>
-                    <i class="fa-solid fa-chevron-down text-kmv-gold transition-transform duration-300 faq-icon"></i>
-                </div>
-                <div class="faq-answer text-gray-600 leading-relaxed">
-                    Да, бесплатная отмена возможна за 7 дней до даты заезда. При отмене менее чем за 7 дней удерживается стоимость первых суток проживания. Детали указаны в условиях каждого объекта.
-                </div>
-            </div>
-
-            <!-- FAQ 4 -->
-            <div class="faq-item border-b border-kmv-sand/50">
-                <div class="faq-question flex items-center justify-between py-6 cursor-pointer">
-                    <h3 class="text-lg font-bold text-kmv-forest pr-8">Как сдать свое жилье через KMV Stay?</h3>
-                    <i class="fa-solid fa-chevron-down text-kmv-gold transition-transform duration-300 faq-icon"></i>
-                </div>
-                <div class="faq-answer text-gray-600 leading-relaxed">
-                    Нажмите кнопку "Разместить объявление" или напишите нам на topsite@atomicmail.io. Наш менеджер свяжется с вами в течение 15 минут, поможет заполнить анкету объекта и опубликует объявление после модерации.
-                </div>
-            </div>
-
-            <!-- FAQ 5 -->
-            <div class="faq-item border-b border-kmv-sand/50">
-                <div class="faq-question flex items-center justify-between py-6 cursor-pointer">
-                    <h3 class="text-lg font-bold text-kmv-forest pr-8">Предоставляете ли вы трансфер?</h3>
-                    <i class="fa-solid fa-chevron-down text-kmv-gold transition-transform duration-300 faq-icon"></i>
-                </div>
-                <div class="faq-answer text-gray-600 leading-relaxed">
-                    Да, мы организуем трансфер из аэропортов Минеральные Воды и Ставрополя. Стоимость рассчитывается индивидуально в зависимости от расстояния и количества пассажиров. Закажите трансфер при бронировании.
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Host Section (Add Apartment) -->
 <section id="hosts" class="py-24 bg-gradient-to-br from-kmv-forest to-kmv-forestLight relative overflow-hidden">
-    <!-- Decorative circles -->
     <div class="absolute top-0 right-0 w-96 h-96 bg-kmv-gold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
     <div class="absolute bottom-0 left-0 w-64 h-64 bg-kmv-terracotta/20 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3"></div>
 
@@ -1059,7 +1398,7 @@
                     <span class="text-kmv-gold italic">быстро и безопасно</span>
                 </h2>
                 <p class="text-white/80 text-lg mb-8 font-light leading-relaxed">
-                    Присоединяйтесь к крупнейшему сообществу хозяев на КМВ. Мы берем на себя фотосъемку, продвижение и проверку гостей. Вы получаете стабильный доход.
+                    Присоединяйтесь к крупнейшему сообществу хозяев на КМВ. Мы берем на себя фотосъемку, продвижение и проверку гостей.
                 </p>
 
                 <div class="space-y-6 mb-10">
@@ -1096,7 +1435,7 @@
                     <i class="fa-solid fa-plus-circle"></i>
                     Добавить свою квартиру
                 </a>
-                <p class="text-white/40 text-xs mt-4">Нажимая кнопку, вы соглашаетесь с условиями для хозяев. Менеджер свяжется с вами в течение 15 минут.</p>
+                <p class="text-white/40 text-xs mt-4">Менеджер свяжется с вами в течение 15 минут.</p>
             </div>
 
             <div class="relative reveal delay-200 hidden lg:block">
@@ -1159,8 +1498,8 @@
 <!-- Footer -->
 <footer class="bg-kmv-dark text-white pt-20 pb-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-            <div class="col-span-1 md:col-span-1">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-12 mb-16">
+            <div class="col-span-1 md:col-span-2">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="w-12 h-12 bg-gradient-to-br from-kmv-gold to-kmv-goldDark rounded-xl flex items-center justify-center text-white">
                         <i class="fa-solid fa-mountain-sun text-xl"></i>
@@ -1171,32 +1510,36 @@
                     </div>
                 </div>
                 <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                    Ваш надежный проводник в мир комфортного отдыха на Кавказских Минеральных Водах. Жилье и впечатления высшего класса.
+                    Ваш надежный проводник в мир комфортного отдыха на Кавказских Минеральных Водах.
                 </p>
                 <div class="flex gap-4">
+                    <a href="mailto:topsite@atomicmail.io?subject=Ссылка%20на%20ВК%20KMV%20Stay&body=Здравствуйте!%20Пришлите%20ссылку%20на%20вашу%20группу%20ВКонтакте." class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-blue-600 transition-colors" title="ВКонтакте">
+                        <i class="fa-brands fa-vk"></i>
+                    </a>
                     <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-kmv-gold transition-colors"><i class="fa-brands fa-telegram"></i></a>
                     <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-kmv-gold transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-kmv-gold transition-colors"><i class="fa-brands fa-vk"></i></a>
                 </div>
             </div>
 
             <div>
-                <h4 class="font-bold text-lg mb-6 text-kmv-gold">Города</h4>
+                <h4 class="font-bold text-lg mb-6 text-kmv-gold">Недвижимость</h4>
                 <ul class="space-y-3 text-sm text-gray-400">
-                    <li><a href="#" class="hover:text-white transition-colors">Аренда в Кисловодске</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Аренда в Пятигорске</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Аренда в Железноводске</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Аренда в Ессентуках</a></li>
+                    <li><a href="#categories" class="hover:text-white transition-colors">Квартиры</a></li>
+                    <li><a href="#categories" class="hover:text-white transition-colors">Коттеджи</a></li>
+                    <li><a href="#categories" class="hover:text-white transition-colors">Таунхаусы</a></li>
+                    <li><a href="#categories" class="hover:text-white transition-colors">Автодома</a></li>
+                    <li><a href="#categories" class="hover:text-white transition-colors">Гостевые дома</a></li>
                 </ul>
             </div>
 
             <div>
-                <h4 class="font-bold text-lg mb-6 text-kmv-gold">Компания</h4>
+                <h4 class="font-bold text-lg mb-6 text-kmv-gold">Услуги</h4>
                 <ul class="space-y-3 text-sm text-gray-400">
-                    <li><a href="#" class="hover:text-white transition-colors">О нас</a></li>
+                    <li><a href="#transport" class="hover:text-white transition-colors">Прокат авто</a></li>
+                    <li><a href="#transport" class="hover:text-white transition-colors">Заказ минибаса</a></li>
+                    <li><a href="#tours" class="hover:text-white transition-colors">Экскурсии</a></li>
+                    <li><a href="#news" class="hover:text-white transition-colors">Новости КМВ</a></li>
                     <li><a href="#hosts" class="hover:text-white transition-colors">Сдать жилье</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Правила бронирования</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Политика конфиденциальности</a></li>
                 </ul>
             </div>
 
@@ -1229,7 +1572,6 @@
 <!-- Chat Bot Widget -->
 <div class="chat-widget">
     <div class="chat-window" id="chatWindow">
-        <!-- Chat Header -->
         <div class="bg-gradient-to-r from-kmv-forest to-kmv-forestLight text-white p-5 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
@@ -1248,7 +1590,6 @@
             </button>
         </div>
 
-        <!-- Chat Messages -->
         <div class="chat-messages" id="chatMessages">
             <div class="chat-message bot">
                 Здравствуйте! 👋 Я виртуальный помощник KMV Stay. Чем могу помочь?
@@ -1256,13 +1597,14 @@
                     <button class="chat-option" onclick="handleOption('booking')">Забронировать жилье</button>
                     <button class="chat-option" onclick="handleOption('host')">Сдать квартиру</button>
                     <button class="chat-option" onclick="handleOption('tour')">Заказать экскурсию</button>
+                    <button class="chat-option" onclick="handleOption('transport')">Транспорт</button>
+                    <button class="chat-option" onclick="handleOption('vk')">Группа ВК</button>
                     <button class="chat-option" onclick="handleOption('contact')">Связаться с нами</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Chat Button -->
     <div class="chat-button" onclick="toggleChat()">
         <i class="fa-solid fa-comments text-white text-2xl"></i>
     </div>
@@ -1316,27 +1658,8 @@
                     behavior: 'smooth'
                 });
 
-                // Close mobile menu if open
                 const mobileMenu = document.getElementById('mobile-menu');
                 if (mobileMenu) mobileMenu.classList.add('hidden');
-            }
-        });
-    });
-
-    // FAQ Accordion
-    document.querySelectorAll('.faq-question').forEach(question => {
-        question.addEventListener('click', () => {
-            const item = question.parentElement;
-            const isActive = item.classList.contains('active');
-            
-            // Close all
-            document.querySelectorAll('.faq-item').forEach(faq => {
-                faq.classList.remove('active');
-            });
-            
-            // Open clicked if it wasn't active
-            if (!isActive) {
-                item.classList.add('active');
             }
         });
     });
@@ -1350,36 +1673,41 @@
     function handleOption(option) {
         const messagesContainer = document.getElementById('chatMessages');
         
-        // Add user message
         let userMessage = '';
         let botResponse = '';
         
         switch(option) {
             case 'booking':
                 userMessage = 'Хочу забронировать жилье';
-                botResponse = 'Отлично! Для бронирования выберите подходящий объект в каталоге и нажмите кнопку "Забронировать". Или напишите нам на <a href="mailto:topsite@atomicmail.io" class="text-kmv-gold underline">topsite@atomicmail.io</a> с указанием города, дат и количества гостей.';
+                botResponse = 'Отлично! Выберите подходящий объект в каталоге и нажмите "Забронировать". Или напишите нам на <a href="mailto:topsite@atomicmail.io" class="text-kmv-gold underline">topsite@atomicmail.io</a>.';
                 break;
             case 'host':
                 userMessage = 'Хочу сдать свою квартиру';
-                botResponse = 'Превосходно! Чтобы добавить свое жилье, нажмите кнопку "Разместить объявление" в меню или напишите нам на <a href="mailto:topsite@atomicmail.io" class="text-kmv-gold underline">topsite@atomicmail.io</a>. Наш менеджер свяжется с вами в течение 15 минут.';
+                botResponse = 'Превосходно! Нажмите кнопку "Разместить объявление" или напишите на <a href="mailto:topsite@atomicmail.io" class="text-kmv-gold underline">topsite@atomicmail.io</a>. Менеджер свяжется в течение 15 минут.';
                 break;
             case 'tour':
                 userMessage = 'Хочу заказать экскурсию';
-                botResponse = 'У нас есть множество интересных экскурсий: Эльбрус, Лермонтовские места, Медовые водопады и другие. Выберите тур в разделе "Экскурсии" или напишите нам на <a href="mailto:topsite@atomicmail.io" class="text-kmv-gold underline">topsite@atomicmail.io</a>.';
+                botResponse = 'У нас есть Эльбрус, Лермонтовские места, Медовые водопады и другие. Выберите тур в разделе "Экскурсии" или напишите на <a href="mailto:topsite@atomicmail.io" class="text-kmv-gold underline">topsite@atomicmail.io</a>.';
+                break;
+            case 'transport':
+                userMessage = 'Нужен транспорт (авто/минибас)';
+                botResponse = 'Мы предлагаем прокат авто (от 2 500 ₽/сутки) и минибасы с водителем (от 5 000 ₽/смена). Напишите на <a href="mailto:topsite@atomicmail.io" class="text-kmv-gold underline">topsite@atomicmail.io</a> с указанием дат и маршрута.';
+                break;
+            case 'vk':
+                userMessage = 'Хочу подписаться на группу ВК';
+                botResponse = 'Отлично! Наша группа ВКонтакте <strong>KMV Stay</strong> — это горящие предложения, скидки до 30% и новости КМВ. Напишите на <a href="mailto:topsite@atomicmail.io" class="text-kmv-gold underline">topsite@atomicmail.io</a>, и мы пришлем ссылку.';
                 break;
             case 'contact':
                 userMessage = 'Как с вами связаться?';
-                botResponse = 'Вы можете связаться с нами:<br>📧 Email: <a href="mailto:topsite@atomicmail.io" class="text-kmv-gold underline">topsite@atomicmail.io</a><br>📞 Телефон: 8 (800) 123-45-67<br>💬 Telegram/WhatsApp: по номеру телефона<br><br>Мы на связи 24/7!';
+                botResponse = '📧 Email: <a href="mailto:topsite@atomicmail.io" class="text-kmv-gold underline">topsite@atomicmail.io</a><br>📞 Телефон: 8 (800) 123-45-67<br>💬 Telegram/WhatsApp: по номеру телефона<br><br>Мы на связи 24/7!';
                 break;
         }
         
-        // Add user message
         const userMsgDiv = document.createElement('div');
         userMsgDiv.className = 'chat-message user';
         userMsgDiv.textContent = userMessage;
         messagesContainer.appendChild(userMsgDiv);
         
-        // Add bot response
         setTimeout(() => {
             const botMsgDiv = document.createElement('div');
             botMsgDiv.className = 'chat-message bot';
@@ -1388,7 +1716,6 @@
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }, 500);
         
-        // Scroll to bottom
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
