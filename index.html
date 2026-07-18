@@ -31,6 +31,9 @@
                             sand: '#F0E9DC',
                             terracotta: '#D4856A',
                             terracottaDark: '#B86B52',
+                            turquoise: '#7FD8D0',
+                            turquoiseLight: '#B8E8E0',
+                            turquoisePale: '#E0F5F2',
                             dark: '#1A1A1A'
                         }
                     },
@@ -180,14 +183,37 @@
             opacity: 1;
         }
 
-        /* Hero Pattern */
+        /* Hero Turquoise Gradient Background */
         .hero-bg {
-            background-image: 
-                linear-gradient(to bottom, rgba(10, 46, 47, 0.5), rgba(10, 46, 47, 0.8)), 
-                url('https://images.unsplash.com/photo-1596395819057-d37f71ca823c?auto=format&fit=crop&q=80&w=1920');
+            background: 
+                radial-gradient(ellipse at top left, rgba(127, 216, 208, 0.4) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(184, 232, 224, 0.5) 0%, transparent 50%),
+                radial-gradient(ellipse at center, rgba(224, 245, 242, 0.8) 0%, transparent 70%),
+                linear-gradient(135deg, #E0F5F2 0%, #B8E8E0 35%, #7FD8D0 70%, #5EC4BB 100%);
+            position: relative;
+        }
+
+        /* Decorative mountain silhouette in hero */
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 200' preserveAspectRatio='none'%3E%3Cpath fill='%23FAF8F3' fill-opacity='0.3' d='M0,160L60,144C120,128,240,96,360,101.3C480,107,600,149,720,149.3C840,149,960,107,1080,96C1200,85,1320,107,1380,117.3L1440,128L1440,200L1380,200C1320,200,1200,200,1080,200C960,200,840,200,720,200C600,200,480,200,360,200C240,200,120,200,60,200L0,200Z'%3E%3C/path%3E%3C/svg%3E");
             background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-position: bottom;
+            pointer-events: none;
+        }
+
+        /* Floating decorative orbs */
+        .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            pointer-events: none;
         }
 
         /* Elegant Button */
@@ -322,36 +348,6 @@
         .chat-option:hover {
             background: #C9A961;
             color: white;
-        }
-
-        /* FAQ Accordion */
-        .faq-item {
-            border-bottom: 1px solid rgba(201, 169, 97, 0.2);
-        }
-
-        .faq-question {
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .faq-question:hover {
-            color: #C9A961;
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, padding 0.4s ease;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 500px;
-            padding-top: 1rem;
-            padding-bottom: 1.5rem;
-        }
-
-        .faq-item.active .faq-icon {
-            transform: rotate(180deg);
         }
 
         /* Category Card */
@@ -496,35 +492,6 @@
             transform: translateY(-5px);
         }
 
-        /* Step Card */
-        .step-card {
-            position: relative;
-            transition: all 0.4s ease;
-        }
-
-        .step-card:hover {
-            transform: translateY(-8px);
-        }
-
-        .step-number {
-            position: absolute;
-            top: -1.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 3rem;
-            height: 3rem;
-            background: linear-gradient(135deg, #C9A961, #A88A4A);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-            box-shadow: 0 4px 15px rgba(201, 169, 97, 0.4);
-        }
-
         /* Mobile Menu */
         @media (max-width: 768px) {
             .chat-widget {
@@ -629,19 +596,24 @@
     </div>
 </nav>
 
-<!-- Hero Section with Search -->
-<section class="relative min-h-[90vh] flex items-center justify-center hero-bg pt-20">
+<!-- Hero Section with Turquoise Gradient -->
+<section class="relative min-h-[90vh] flex items-center justify-center hero-bg pt-20 overflow-hidden">
+    <!-- Decorative floating orbs -->
+    <div class="hero-orb" style="width: 400px; height: 400px; background: #7FD8D0; top: 10%; left: -10%;"></div>
+    <div class="hero-orb" style="width: 300px; height: 300px; background: #B8E8E0; bottom: 10%; right: -5%;"></div>
+    <div class="hero-orb" style="width: 200px; height: 200px; background: #C9A961; top: 30%; right: 20%; opacity: 0.2;"></div>
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center">
         <div class="reveal">
-            <span class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white border border-white/20 px-5 py-2 rounded-full text-sm font-semibold mb-8 tracking-wide">
+            <span class="inline-flex items-center gap-2 bg-white/60 backdrop-blur-md text-kmv-forest border border-white/40 px-5 py-2 rounded-full text-sm font-semibold mb-8 tracking-wide shadow-sm">
                 <i class="fa-solid fa-award text-kmv-gold"></i>
                 Более 500 проверенных объектов на КМВ
             </span>
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white leading-tight mb-8 drop-shadow-2xl">
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-kmv-forest leading-tight mb-8">
                 Откройте для себя <br>
-                <span class="text-kmv-gold italic">Кавказские Минеральные Воды</span>
+                <span class="italic text-kmv-forestLight">Кавказские Минеральные Воды</span>
             </h1>
-            <p class="text-white/90 text-lg md:text-xl max-w-3xl mx-auto mb-14 font-light leading-relaxed">
+            <p class="text-kmv-forest/80 text-lg md:text-xl max-w-3xl mx-auto mb-14 font-light leading-relaxed">
                 Элитные квартиры, коттеджи, таунхаусы и автодома в Кисловодске, Пятигорске и Железноводске. Прокат авто и незабываемые экскурсии.
             </p>
         </div>
